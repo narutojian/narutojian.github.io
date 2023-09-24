@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.2">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="manifest" href="/images/site.webmanifest">
+  <meta name="google-site-verification" content="<meta name="google-site-verification" content="flKSt7LiyY7jUhlnv-ICYGB3DW183M7aZEM_MJ0LyAM" />">
+  <meta name="msvalidate.01" content="<meta name="msvalidate.01" content="551E330FEDD04710DC9B83BE6974A021" />">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css" integrity="sha256-jTIdiMuX/e3DGJUGwl3pKSxuc6YOuqtJYkM0bGQESA4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"narutojian.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.10.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="tinywebserver 项目">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TinyWebServer项目学习笔记">
+<meta property="og:url" content="http://narutojian.github.io/2023/04/11/TinyWebServer%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="岁月的童话">
+<meta property="og:description" content="tinywebserver 项目">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-04-11T12:54:02.000Z">
+<meta property="article:modified_time" content="2023-09-24T18:38:22.982Z">
+<meta property="article:author" content="秃头的小刺猬">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://narutojian.github.io/2023/04/11/TinyWebServer%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://narutojian.github.io/2023/04/11/TinyWebServer%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/","path":"2023/04/11/TinyWebServer项目学习/","title":"TinyWebServer项目学习笔记"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>TinyWebServer项目学习笔记 | 岁月的童话</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">岁月的童话</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">程序猿，学习，生活</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-commonweal"><a href="/404/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>公益 404</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#tinywebserver%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0"><span class="nav-number">1.</span> <span class="nav-text">TinyWebServer项目学习</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFsocket"><span class="nav-number">1.1.</span> <span class="nav-text">什么是socket？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AB%AF%E5%8F%A3%E5%A4%8D%E7%94%A8"><span class="nav-number">1.1.1.</span> <span class="nav-text">端口复用：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#accept%E5%87%BD%E6%95%B0%E5%81%9A%E4%BA%86%E4%BB%80%E4%B9%88"><span class="nav-number">1.1.2.</span> <span class="nav-text">accept函数做了什么？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E4%B8%AD%E4%B8%BA%E4%BB%80%E4%B9%88%E7%94%A8%E9%9D%9E%E9%98%BB%E5%A1%9Esocket"><span class="nav-number">1.1.3.</span> <span class="nav-text">项目中为什么用非阻塞socket？</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFepoll"><span class="nav-number">1.2.</span> <span class="nav-text">什么是epoll？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#et%E5%92%8Clt%E4%B8%A4%E7%A7%8D%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.2.1.</span> <span class="nav-text">ET和LT两种模式的区别</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%83%8A%E7%BE%A4%E7%8E%B0%E8%B1%A1"><span class="nav-number">1.3.</span> <span class="nav-text">惊群现象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFreactor%E6%A8%A1%E5%BC%8F%E5%92%8Cproactor%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.4.</span> <span class="nav-text">什么是Reactor模式和Proactor模式？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E7%BA%BF%E7%A8%8B%E6%B1%A0"><span class="nav-number">1.5.</span> <span class="nav-text">什么是线程池？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#c%E7%9A%84%E7%BA%BF%E7%A8%8B%E5%BA%93%E5%92%8Cc%E7%9A%84%E7%BA%BF%E7%A8%8B%E5%BA%93"><span class="nav-number">1.6.</span> <span class="nav-text">c的线程库和c++的线程库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%A1%E5%8F%B7%E9%87%8F%E4%BA%92%E6%96%A5%E9%94%81%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F"><span class="nav-number">1.7.</span> <span class="nav-text">信号量，互斥锁，条件变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.8.</span> <span class="nav-text">什么是单例模式？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B1%80%E9%83%A8%E9%9D%99%E6%80%81%E5%8F%98%E9%87%8F%E4%B8%BA%E4%BB%80%E4%B9%88%E6%98%AF%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E7%9A%84"><span class="nav-number">1.8.1.</span> <span class="nav-text">局部静态变量为什么是线程安全的？</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A7%81%E6%9C%89%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E6%98%AF%E4%BB%80%E4%B9%88%E4%BB%A5%E5%8F%8A%E4%BD%9C%E7%94%A8"><span class="nav-number">1.9.</span> <span class="nav-text">私有构造函数是什么以及作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#c-mysql.h"><span class="nav-number">1.10.</span> <span class="nav-text">c++ mysql.h</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%89%E9%99%90%E7%8A%B6%E6%80%81%E6%9C%BA"><span class="nav-number">1.11.</span> <span class="nav-text">有限状态机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#c-raii%E5%8E%9F%E7%90%86"><span class="nav-number">1.12.</span> <span class="nav-text">c++ RAII原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#http%E4%B8%ADget%E5%92%8Cpost%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.13.</span> <span class="nav-text">http中get和post的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#socket%E4%B8%AD%E7%9A%84listen%E5%87%BD%E6%95%B0%E4%BC%9A%E9%98%BB%E5%A1%9E%E8%BF%9B%E7%A8%8B%E5%90%97"><span class="nav-number">1.14.</span> <span class="nav-text">socket中的listen函数会阻塞进程吗？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFio%E5%A4%8D%E7%94%A8"><span class="nav-number">1.15.</span> <span class="nav-text">什么是I&#x2F;O复用？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%AF%E9%87%8D%E5%85%A5%E5%87%BD%E6%95%B0%E5%92%8C%E4%B8%8D%E5%8F%AF%E9%87%8D%E5%85%A5%E5%87%BD%E6%95%B0"><span class="nav-number">1.16.</span> <span class="nav-text">可重入函数和不可重入函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E6%97%B6%E5%99%A8%E8%AE%BE%E8%AE%A1%E7%9A%84%E6%B5%81%E7%A8%8B"><span class="nav-number">1.17.</span> <span class="nav-text">定时器设计的流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#eintr%E5%92%8Ceagain%E9%94%99%E8%AF%AF"><span class="nav-number">1.18.</span> <span class="nav-text">EINTR和EAGAIN错误</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFio%E5%90%91%E9%87%8F%E6%9C%BA%E5%88%B6"><span class="nav-number">1.19.</span> <span class="nav-text">什么是io向量机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#http%E8%BF%9E%E6%8E%A5%E5%A4%84%E7%90%86"><span class="nav-number">1.20.</span> <span class="nav-text">http连接处理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#http%E4%B8%ADkeep-alive%E9%95%BF%E8%BF%9E%E6%8E%A5"><span class="nav-number">1.20.1.</span> <span class="nav-text">http中keep-alive长连接</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#rn0%E5%88%86%E5%88%AB%E6%98%AF%E4%BB%80%E4%B9%88%E6%84%8F%E6%80%9D"><span class="nav-number">1.20.2.</span> <span class="nav-text">\r,\n,\0分别是什么意思</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tinywebserver%E9%A1%B9%E7%9B%AE%E5%8F%AF%E6%94%B9%E8%BF%9B%E7%9A%84%E5%9C%B0%E6%96%B9"><span class="nav-number">1.21.</span> <span class="nav-text">TinyWebServer项目可改进的地方</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="秃头的小刺猬"
+      src="/images/avatar/avatar.jpg">
+  <p class="site-author-name" itemprop="name">秃头的小刺猬</p>
+  <div class="site-description" itemprop="description">让岁月留下痕迹</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">58</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">37</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">61</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/narutojian" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;narutojian" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.jsdelivr.net/npm/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://narutojian.github.io/2023/04/11/TinyWebServer%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar/avatar.jpg">
+      <meta itemprop="name" content="秃头的小刺猬">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="岁月的童话">
+      <meta itemprop="description" content="让岁月留下痕迹">
+    </span>
+    
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="TinyWebServer项目学习笔记 | 岁月的童话">
+      <meta itemprop="description" content="tinywebserver 项目">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          TinyWebServer项目学习笔记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-04-11 20:54:02" itemprop="dateCreated datePublished" datetime="2023-04-11T20:54:02+08:00">2023-04-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-09-25 02:38:22" itemprop="dateModified" datetime="2023-09-25T02:38:22+08:00">2023-09-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E9%A1%B9%E7%9B%AE/" itemprop="url" rel="index"><span itemprop="name">项目</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E9%A1%B9%E7%9B%AE/webserver/" itemprop="url" rel="index"><span itemprop="name">webserver</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>6.7k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>45 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">tinywebserver 项目</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="tinywebserver项目学习">TinyWebServer项目学习</h2>
+<h3 id="什么是socket">什么是socket？</h3>
+<p>Socket是<strong>应用层与TCP/IP协议族通信的中间软件抽象层</strong>，它是一组接口；它屏蔽了网络模型中传输层下面的所有层，让用户觉得网络从主机A的应用层到传输层直接传到了主机B的传输层再到B的应用层。</p>
+<p>参考：</p>
+<ol type="1">
+<li>https://blog.nowcoder.net/n/b19e6193439b4c4c85cab8ff2a38bdbb?from=nowcoder_improve</li>
+<li>https://zhuanlan.zhihu.com/p/119085959</li>
+</ol>
+<h4 id="端口复用">端口复用：</h4>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">setsockopt(s,SOL_SOCKET,SO_REUSEADDR,&amp;buf,<span class="number">1</span>));</span><br></pre></td></tr></table></figure>
+<p>在端口复用技术中最重要的一个函数是<code>setsockopt()</code>,这个函数就决定了端口的重绑定问题。为了通知套接口实现不要因为一个地址已被一个套接口使用就不让它与另一个套接口捆绑，应用程序可在<code>bind()</code>调用前先设置 <code>SO_REUSEADDR</code>选项。</p>
+<p>我们这里要使用的是<code>socket</code>中的 <code>SO_REUSEADDR</code>，下面是它的解释。</p>
+<p>SO_REUSEADDR 提供如下四个功能：</p>
+<blockquote>
+<p>SO_REUSEADDR：允许启动一个监听服务器并捆绑其众所周知端口，即使以前建立的将此端口用做他们的本地端口的连接仍存在。这通常是重启监听服务器时出现，若不设置此选项，则bind时将出错。SO_REUSEADDR：允许在同一端口上启动同一服务器的多个实例，只要每个实例捆绑一个不同的本地IP地址即可。对于TCP，我们根本不可能启动捆绑相同IP地址和相同端口号的多个服务器。SO_REUSEADDR：允许单个进程捆绑同一端口到多个套接口上，只要每个捆绑指定不同的本地IP地址即可。这一般不用于TCP服务器。SO_REUSEADDR：允许完全重复的捆绑：当一个IP地址和端口绑定到某个套接口上时，还允许此IP地址和端口捆绑到另一个套接口上。一般来说，这个特性仅在支持多播的系统上才有，而且只对UDP套接口而言（TCP不支持多播）。</p>
+</blockquote>
+<h4 id="accept函数做了什么">accept函数做了什么？</h4>
+<h4 id="项目中为什么用非阻塞socket">项目中为什么用非阻塞socket？</h4>
+<h3 id="什么是epoll">什么是epoll？</h3>
+<p>epoll是I/O复用的一种方式，是目前用的最多也是最好的一种方式。I/O多路复用就是用多个I/O连接复用一个线程/进程，来实现多个I/O的管理。当有I/O事件产生时，它可以知道是哪个I/O（哪个fd文件描述符）。</p>
+<p>参考：</p>
+<ol type="1">
+<li>https://www.cnblogs.com/lojunren/p/3856290.html</li>
+<li>https://www.xiaolincoding.com/os/8_network_system/selete_poll_epoll.html</li>
+<li>https://www.jianshu.com/p/67c988f750df</li>
+<li>https://www.cnblogs.com/skyfsm/p/7102367.html</li>
+<li>https://www.cnblogs.com/fnlingnzb-learner/p/5835573.html</li>
+</ol>
+<h4 id="et和lt两种模式的区别">ET和LT两种模式的区别</h4>
+<p>当fd有一个事件的时候，比如读或者写事件，LT模式在这个事件没有处理完的情况下，会继续把这个事件加入到就绪队列中，直到处理完成；ET模式只会通知一次，不管你有没有处理完成，这个事件也不会加入到就绪队列中，除非有新的数据进来产生新的事件。</p>
+<p>参考：</p>
+<p>https://zhuanlan.zhihu.com/p/441677252</p>
+<h3 id="惊群现象">惊群现象</h3>
+<p>参考：</p>
+<p>https://wenfh2020.com/2021/09/25/thundering-herd/</p>
+<h3 id="什么是reactor模式和proactor模式">什么是Reactor模式和Proactor模式？</h3>
+<p>这两个模式是高性能网络模式。</p>
+<p>Reactor是非阻塞同步模型，I/O多路复用监控事件，收到事件后，根据事件类型分配给某个进程/线程。</p>
+<p>Proacotr是异步网络模式。</p>
+<p>参考：</p>
+<ol type="1">
+<li>https://xiaolincoding.com/os/8_network_system/reactor.html</li>
+<li>https://zhuanlan.zhihu.com/p/95662364</li>
+</ol>
+<h3 id="什么是线程池">什么是线程池？</h3>
+<p>参考：</p>
+<p>https://zhuanlan.zhihu.com/p/444375447</p>
+<p>https://zhuanlan.zhihu.com/p/367309864</p>
+<p>https://zhuanlan.zhihu.com/p/367309864 c++11写的线程池</p>
+<h3 id="c的线程库和c的线程库">c的线程库和c++的线程库</h3>
+<p>参考：</p>
+<p>https://blog.csdn.net/sinat_35261315/article/details/79275839</p>
+<h3 id="信号量互斥锁条件变量">信号量，互斥锁，条件变量</h3>
+<p>条件变量是为了更高效的使用cpu等资源，让进程/线程在满足一定条件后才能去竞争共享资源。</p>
+<p>条件变量参考：</p>
+<ol type="1">
+<li>https://blog.csdn.net/m0_37621078/article/details/89766449</li>
+<li>https://www.cnblogs.com/yunfan1024/p/14140687.html</li>
+</ol>
+<p>参考：</p>
+<ol type="1">
+<li>https://www.cnblogs.com/549294286/p/3687678.html</li>
+<li>https://www.cnblogs.com/cangqinglang/p/13328217.html</li>
+</ol>
+<h3 id="什么是单例模式">什么是单例模式？</h3>
+<p>参考：</p>
+<p>https://zhuanlan.zhihu.com/p/37469260</p>
+<h4 id="局部静态变量为什么是线程安全的">局部静态变量为什么是线程安全的？</h4>
+<h3 id="私有构造函数是什么以及作用">私有构造函数是什么以及作用</h3>
+<p>在 C++ 中，构造函数是用于创建和初始化对象的特殊成员函数。默认情况下，构造函数是公有的（public），可以在类的外部和内部访问和调用。然而，将构造函数放在私有区域（private）内是一种常见的技术，被称为私有构造函数（Private Constructor）。</p>
+<p>私有构造函数的目的是限制类的实例化，即防止类的用户直接创建对象。这在某些设计模式和类的实现中非常有用。通过将构造函数声明为私有，只有类的内部成员函数可以调用构造函数。这意味着只能在类的内部创建对象，而无法在类的外部进行实例化。</p>
+<p>示例代码如下所示：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass</span> &#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    MyClass() &#123;</span><br><span class="line">        <span class="comment">// 私有构造函数</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">static</span> MyClass* <span class="title">createInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> MyClass();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">someFunction</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 类的成员函数</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>在上面的示例中，构造函数 <code>MyClass()</code> 被声明为私有，并通过公有的静态成员函数 <code>createInstance()</code> 来创建类的实例。只有 <code>createInstance()</code> 函数内部可以调用私有构造函数，从而实现了对实例化过程的控制。</p>
+<p>通过这种方式，类的用户无法直接实例化对象，而是需要调用公有的静态函数来获取类的实例。这可以让类的设计者在类的创建过程中施加一些额外的逻辑和限制，以确保对象的正确初始化和使用。</p>
+<p>需要注意的是，私有构造函数并不是 C++ 中的强制规定，而是一种编程技巧，用于特定的设计和实现需求。在一般情况下，构造函数应该是公有的，以便类的用户可以直接实例化对象。</p>
+<p>私有构造函数的使用场景有以下几个常见的情况：</p>
+<ol type="1">
+<li><p><strong>单例模式（Singleton Pattern）</strong>：单例模式是一种创建唯一实例的设计模式。通过将构造函数声明为私有，可以防止类的用户直接实例化多个对象。类内部可以提供一个公有的静态成员函数，用于获取类的唯一实例。这样可以确保在整个程序中只存在一个实例。</p></li>
+<li><p><strong>工厂模式（Factory Pattern）</strong>：工厂模式是一种通过工厂类来创建对象的设计模式。通过将构造函数声明为私有，可以限制类的用户直接创建对象。工厂类内部可以使用私有构造函数来创建对象，并提供公有的静态方法或非静态方法来返回实例化的对象。</p></li>
+<li><p><strong>静态类（Static Class）</strong>：静态类是一种只包含静态成员的类，无需实例化即可访问。通过将构造函数声明为私有，可以防止类的用户实例化静态类的对象。静态类的成员函数和成员变量都可以是静态的，可以通过类名直接访问。</p></li>
+<li><p><strong>辅助类（Helper Class）</strong>：有时候，可能会创建一些只包含静态方法的辅助类，用于提供一些实用函数或算法。将构造函数声明为私有，可以防止类的用户直接实例化辅助类的对象，而只能通过调用静态方法来使用辅助类。</p></li>
+</ol>
+<p>总的来说，私有构造函数主要用于控制对象的创建和实例化过程，以便满足特定的设计需求，例如单例模式、工厂模式、静态类和辅助类等。通过将构造函数设为私有，可以限制对象的创建方式，提供更好的封装和控制。</p>
+<h3 id="c-mysql.h">c++ mysql.h</h3>
+<p>参考：https://dulishu.top/mysql-c-api/</p>
+<h3 id="有限状态机">有限状态机</h3>
+<p>参考：https://zhuanlan.zhihu.com/p/46347732</p>
+<h3 id="c-raii原理">c++ RAII原理</h3>
+<p>使用局部对象来管理资源的技术就是RAII（Resource Acquisition Is Initialization）。</p>
+<p>利用类本身的生命周期来管理。</p>
+<p>参考：</p>
+<p>https://zhuanlan.zhihu.com/p/34660259</p>
+<p>https://blog.csdn.net/doc_sgl/article/details/43028009</p>
+<h3 id="http中get和post的区别">http中get和post的区别</h3>
+<p>参考：</p>
+<p>https://cloud.tencent.com/developer/article/1915518</p>
+<p>https://www.zhihu.com/question/28586791</p>
+<h3 id="socket中的listen函数会阻塞进程吗">socket中的listen函数会阻塞进程吗？</h3>
+<p>在调用 <code>listen</code> 函数之后，它会使套接字进入监听状态，并开始接受传入的连接请求。但是，<code>listen</code> 函数本身不会阻塞进程。它只是设置套接字的状态，告诉操作系统该套接字准备好接受连接。</p>
+<p>然而，一旦调用 <code>listen</code> 后，接下来的操作通常是调用 <code>accept</code> 函数来接受连接请求。<code>accept</code> 函数会阻塞进程，直到有新的连接请求到达并被接受。在没有新连接请求到达之前，<code>accept</code> 函数会一直阻塞。</p>
+<p>所以，虽然 <code>listen</code> 函数本身不会阻塞进程，但在调用 <code>listen</code> 后，通常会紧接着调用 <code>accept</code> 函数，而 <code>accept</code> 函数可能会导致进程阻塞，直到有新的连接请求到达。</p>
+<p>需要注意的是，你可以通过设置套接字为非阻塞模式，使 <code>accept</code> 函数变为非阻塞的。这样，即使没有新连接请求到达，<code>accept</code> 函数也会立即返回，并可以通过其他方式来检查是否有新的连接请求到达。</p>
+<h3 id="什么是io复用">什么是I/O复用？</h3>
+<p>I/O 多路复用的本质，是通过一种机制（系统内核缓冲I/O数据），让单个进程可以监视多个文件描述符，一旦某个描述符就绪（一般是读就绪或写就绪），能够通知程序进行相应的读写操作。</p>
+<p>epoll是linux提供的I/O多路复用的一种方式。</p>
+<p>一般来说，一个socket连接会用一个线程/进程来管理，当服务器socket监听到有新的客户socket来的时候，会创建一个线程来处理这个客户socket所产生的读/写操作。这样子线程利用率不高，因为读写这种操作，在一段时间内发生的时间很短，大部分的时间都是没有这些操作的。所以采用epoll这种方式，就会让一个线程/进程管理很多个客户socket，当某个客户socket有事件发生的时候，会有事件通知，从而用一个线程进行处理该事件。</p>
+<h3 id="可重入函数和不可重入函数">可重入函数和不可重入函数</h3>
+<p>其实就是有没有对共享数据进行除了读操作以外的任意操作。</p>
+<p>参考：</p>
+<p>https://cloud.tencent.com/developer/article/1685935</p>
+<p>https://segmentfault.com/a/1190000022571212</p>
+<h3 id="定时器设计的流程">定时器设计的流程</h3>
+<p>采用发送<code>SIGALRM</code>信号来定时——<code>alarm（系统调用函数）</code>可以周期性的触发<code>SIGALRM</code>信号；</p>
+<p>再通过系统调用函数<code>sigaction</code>来注册信号，并为每种信号写一个处理函数。</p>
+<p>然后为了统一管理事件，把信号发送也作为一种事件，用了一个<code>socketpair</code>函数建立了一个<code>管道</code>，就是一对互相通信的<code>socket</code>，然后把其中一个<code>socket</code>注册到<code>epoll</code>的内核事件表中。</p>
+<p>此时，在信号处理函数中，会让这个<code>管道</code>的另一个socket发送对应的信号，然后<code>epoll</code>就会管理这个事件，并处理信号对应的具体的事件。</p>
+<h3 id="eintr和eagain错误">EINTR和EAGAIN错误</h3>
+<p>参考：</p>
+<p>https://cloud.tencent.com/developer/article/2054104#</p>
+<h3 id="什么是io向量机制">什么是io向量机制</h3>
+<h3 id="http连接处理">http连接处理</h3>
+<h4 id="http中keep-alive长连接">http中keep-alive长连接</h4>
+<p>在 HTTP 协议中，"Keep-Alive" 是一种机制，用于在单个 TCP 连接上持续保持多个 HTTP 请求和响应的交互。它的主要目的是减少每个请求的连接建立和关闭的开销，提高网络性能和效率。</p>
+<p>以下是 "Keep-Alive" 的一些用处：</p>
+<ol type="1">
+<li><p>连接复用：使用 "Keep-Alive"，可以在同一个 TCP 连接上发送多个 HTTP 请求和接收多个 HTTP 响应。这样可以避免为每个请求和响应建立新的连接，减少了连接建立和关闭的时间开销。</p></li>
+<li><p>减少延迟：由于避免了频繁的连接建立和关闭，"Keep-Alive" 可以降低请求的延迟。在一个 TCP 连接上，可以立即发送下一个请求，而无需等待连接建立或关闭。</p></li>
+<li><p>节省资源：每个 TCP 连接都需要占用一定的系统资源，包括内存和处理能力。使用 "Keep-Alive" 可以减少同时打开的连接数量，从而节省了系统资源。</p></li>
+<li><p>并发性能：通过复用连接，"Keep-Alive" 可以提高服务器的并发性能。服务器可以同时处理多个请求，而无需为每个请求分别建立连接。</p></li>
+</ol>
+<p>需要注意的是，"Keep-Alive" 并不是默认启用的，需要在 HTTP 请求和响应的头部中明确指定。具体来说，需要在请求头部中添加 "Connection: keep-alive" 字段，以及在响应头部中添加 "Connection: keep-alive" 字段。</p>
+<p>虽然 "Keep-Alive" 可以带来一些性能优势，但它也有一些考虑因素。长时间的连接可能会占用服务器资源，因此需要在服务器端进行适当的配置和管理，以避免资源的滥用和过度消耗。</p>
+<p>总之，"Keep-Alive" 提供了一种有效的机制，通过复用连接来减少连接建立和关闭的开销，提高 HTTP 请求的效率和性能。</p>
+<p>希望这个解释对你有帮助。如果你有任何进一步的问题，请随时提问。</p>
+<h4 id="rn0分别是什么意思"><code>\r,\n,\0</code>分别是什么意思</h4>
+<p><code>\r</code>、<code>\n</code> 和 <code>\0</code> 都是转义字符，用于表示特定的控制字符。</p>
+<ol type="1">
+<li><code>\r</code> 表示回车符（Carriage Return），ASCII 值为 13。它将光标移动到当前行的开头位置，常用于在同一行的开头重新输出内容。在文本处理中，<code>\r</code> 通常与换行符 <code>\n</code> 搭配使用，表示回车换行操作。例如，Windows 操作系统使用回车换行符 <code>\r\n</code> 表示换行。</li>
+<li><code>\n</code> 表示换行符（Line Feed），ASCII 值为 10。它将光标移动到下一行的开头位置，常用于表示换行操作。在大多数操作系统中，如 Unix、Linux 和现代的 Mac OS 系统，只使用 <code>\n</code> 表示换行。</li>
+<li><code>\0</code> 表示空字符（Null Character），ASCII 值为 0。它是一个特殊的控制字符，通常用于表示 C-风格字符串的结束符。在以 <code>\0</code> 结尾的字符串中，<code>\0</code> 表示字符串的结束，标志着字符串的终止。</li>
+</ol>
+<p>在 C++ 的字符串字面值中，可以使用这些转义字符来表示相应的控制字符。例如：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Hello, world!\n&quot;</span>;</span><br><span class="line"><span class="keyword">char</span> str[] = <span class="string">&quot;Hello\r\n&quot;</span>;</span><br></pre></td></tr></table></figure>
+<p>上述代码中，第一行输出了 "Hello, world!" 并在末尾添加了一个换行符。第二行创建了一个字符数组 <code>str</code>，其中包含了 "Hello"、回车符和换行符，用于表示一个以回车换行结尾的字符串。</p>
+<p>需要注意的是，这些转义字符具有不同的含义和用途，并且在不同的环境和上下文中可能会有所不同。因此，在使用时需要根据具体情况进行适当的使用和解释。</p>
+<p>希望这个解释能帮助你理解 <code>\r</code>、<code>\n</code> 和 <code>\0</code> 的含义。如果你有任何进一步的问题，请随时提问。</p>
+<h3 id="tinywebserver项目可改进的地方">TinyWebServer项目可改进的地方</h3>
+<ol type="1">
+<li><p>线程池。原项目采用的是liunx下的pthread库，可以采用c++11后提供的thread库。</p></li>
+<li><p>登陆的状态没有保存，可以加一个cookie和session</p></li>
+<li><p>数据库可以采用redis</p></li>
+<li><p>定时器优化，可以优化成时间轮，时间堆。</p></li>
+<li><p>用智能指针管理项目中的指针</p></li>
+</ol>
+<p>​</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>秃头的小刺猬
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://narutojian.github.io/2023/04/11/TinyWebServer%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/" title="TinyWebServer项目学习笔记">http://narutojian.github.io/2023/04/11/TinyWebServer项目学习/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/04/11/c++%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/" rel="prev" title="python 基础语法笔记">
+                  <i class="fa fa-chevron-left"></i> python 基础语法笔记
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/04/14/mac-m1-configure-vscode-for-cpp/" rel="next" title="mac m1 configure vscode for c++">
+                  mac m1 configure vscode for c++ <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2020 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class=""></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">秃头的小刺猬</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">105k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">11:41</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.2">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="manifest" href="/images/site.webmanifest">
+  <meta name="google-site-verification" content="<meta name="google-site-verification" content="flKSt7LiyY7jUhlnv-ICYGB3DW183M7aZEM_MJ0LyAM" />">
+  <meta name="msvalidate.01" content="<meta name="msvalidate.01" content="551E330FEDD04710DC9B83BE6974A021" />">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css" integrity="sha256-jTIdiMuX/e3DGJUGwl3pKSxuc6YOuqtJYkM0bGQESA4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"narutojian.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.10.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="组会讲解目标检测到经典算法以及和当前项目相关的点">
+<meta property="og:type" content="article">
+<meta property="og:title" content="目标检测介绍">
+<meta property="og:url" content="http://narutojian.github.io/2022/06/21/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E4%BB%8B%E7%BB%8D/index.html">
+<meta property="og:site_name" content="岁月的童话">
+<meta property="og:description" content="组会讲解目标检测到经典算法以及和当前项目相关的点">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://image-bed.limit-infinite.top/images/blog/2023-03-22-085722.png">
+<meta property="og:image" content="http://image-bed.limit-infinite.top/images/blog/2023-03-22-085923.png">
+<meta property="og:image" content="http://image-bed.limit-infinite.top/images/blog/2023-03-22-085931.png">
+<meta property="og:image" content="http://image-bed.limit-infinite.top/images/blog/2023-03-22-085939.png">
+<meta property="og:image" content="http://image-bed.limit-infinite.top/images/blog/2023-03-22-085946.png">
+<meta property="og:image" content="http://image-bed.limit-infinite.top/images/blog/2023-03-22-085954.png">
+<meta property="og:image" content="http://image-bed.limit-infinite.top/images/blog/2023-03-22-090002.png">
+<meta property="og:image" content="http://narutojian.github.io/2022/06/21/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E4%BB%8B%E7%BB%8D/images/目标检测介绍/image-20220703163719371.png">
+<meta property="og:image" content="http://narutojian.github.io/2022/06/21/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E4%BB%8B%E7%BB%8D/images/目标检测介绍/image-20220703165841656.png">
+<meta property="og:image" content="http://image-bed.limit-infinite.top/images/blog/2023-03-22-090015.png">
+<meta property="article:published_time" content="2022-06-21T02:39:47.000Z">
+<meta property="article:modified_time" content="2023-09-24T18:38:23.014Z">
+<meta property="article:author" content="秃头的小刺猬">
+<meta property="article:tag" content="目标检测">
+<meta property="article:tag" content="组会">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://image-bed.limit-infinite.top/images/blog/2023-03-22-085722.png">
+
+
+<link rel="canonical" href="http://narutojian.github.io/2022/06/21/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E4%BB%8B%E7%BB%8D/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://narutojian.github.io/2022/06/21/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E4%BB%8B%E7%BB%8D/","path":"2022/06/21/目标检测介绍/","title":"目标检测介绍"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>目标检测介绍 | 岁月的童话</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">岁月的童话</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">程序猿，学习，生活</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-commonweal"><a href="/404/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>公益 404</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B"><span class="nav-number">1.</span> <span class="nav-text">目标检测</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E4%BB%BB%E5%8A%A1%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">1.1.</span> <span class="nav-text">目标检测任务是什么</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E7%BB%8F%E5%85%B8%E5%B7%A5%E4%BD%9C%E7%AE%97%E6%B3%95"><span class="nav-number">1.2.</span> <span class="nav-text">目标检测经典工作&#x2F;算法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#two-stage-%E6%A8%A1%E5%9E%8B-vs-one-stage-%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.2.1.</span> <span class="nav-text">two-stage 模型 VS one-stage 模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#r-cnn%E7%B3%BB%E5%88%97"><span class="nav-number">1.2.2.</span> <span class="nav-text">R-CNN系列</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#r-cnn-regions-with-cnn-features"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">R-CNN Regions with CNN features</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#fast-r-cnn"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">Fast R-CNN</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#faster-r-cnn%E6%B2%A1%E6%9C%89fastest-r-cnn%E4%BA%86"><span class="nav-number">1.2.2.3.</span> <span class="nav-text">Faster R-CNN（没有Fastest R-CNN了）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#mask-r-cnn"><span class="nav-number">1.2.2.4.</span> <span class="nav-text">Mask R-CNN</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#yolo-%E7%B3%BB%E5%88%97"><span class="nav-number">1.2.3.</span> <span class="nav-text">Yolo 系列</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#yolo-v1-%E5%BC%80%E5%B1%B1%E4%B9%8B%E4%BD%9C12"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">Yolo v1 开山之作1</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ssd%E4%B8%8D%E6%98%AF%E5%9B%BA%E6%80%81%E7%A1%AC%E7%9B%98"><span class="nav-number">1.2.4.</span> <span class="nav-text">SSD（不是固态硬盘）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#detr"><span class="nav-number">1.2.5.</span> <span class="nav-text">DETR</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#deformable-detr"><span class="nav-number">1.2.6.</span> <span class="nav-text">Deformable DETR</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">1.2.7.</span> <span class="nav-text">其他</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#fpn-feature-pyramid-networks-%E7%89%B9%E5%BE%81%E9%87%91%E5%AD%97%E5%A1%94%E7%BD%91%E7%BB%9C"><span class="nav-number">1.2.7.1.</span> <span class="nav-text">FPN: Feature Pyramid Networks 特征金字塔网络</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E7%9A%84%E5%BC%80%E6%BA%90%E5%BA%93"><span class="nav-number">1.3.</span> <span class="nav-text">常用的开源库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">1.4.</span> <span class="nav-text">参考</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="秃头的小刺猬"
+      src="/images/avatar/avatar.jpg">
+  <p class="site-author-name" itemprop="name">秃头的小刺猬</p>
+  <div class="site-description" itemprop="description">让岁月留下痕迹</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">58</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">37</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">61</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/narutojian" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;narutojian" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.jsdelivr.net/npm/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://narutojian.github.io/2022/06/21/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E4%BB%8B%E7%BB%8D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar/avatar.jpg">
+      <meta itemprop="name" content="秃头的小刺猬">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="岁月的童话">
+      <meta itemprop="description" content="让岁月留下痕迹">
+    </span>
+    
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="目标检测介绍 | 岁月的童话">
+      <meta itemprop="description" content="组会讲解目标检测到经典算法以及和当前项目相关的点">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          目标检测介绍
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-06-21 10:39:47" itemprop="dateCreated datePublished" datetime="2022-06-21T10:39:47+08:00">2022-06-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-09-25 02:38:23" itemprop="dateModified" datetime="2023-09-25T02:38:23+08:00">2023-09-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%A0%94%E7%A9%B6%E7%94%9F/" itemprop="url" rel="index"><span itemprop="name">研究生</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%A0%94%E7%A9%B6%E7%94%9F/%E7%BB%84%E4%BC%9A/" itemprop="url" rel="index"><span itemprop="name">组会</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.8k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>12 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">组会讲解目标检测到经典算法以及和当前项目相关的点</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="目标检测">目标检测</h2>
+<h3 id="目标检测任务是什么">目标检测任务是什么</h3>
+<figure>
+<img src="http://image-bed.limit-infinite.top/images/blog/2023-03-22-085722.png" alt="image-20220620182452332" /><figcaption aria-hidden="true">image-20220620182452332</figcaption>
+</figure>
+<p>相比分类，目标检测还要确定物体在图像中的位置（多任务的学习）</p>
+<h3 id="目标检测经典工作算法">目标检测经典工作/算法</h3>
+<p>anchor-based 基于锚框的</p>
+<p>Anchor-free 没有锚框的</p>
+<h4 id="two-stage-模型-vs-one-stage-模型">two-stage 模型 VS one-stage 模型</h4>
+<p>目标检测任务可细分为两个子任务：</p>
+<ul>
+<li>定位（确定物体的位置）</li>
+<li>分类（）</li>
+</ul>
+<h4 id="r-cnn系列">R-CNN系列</h4>
+<h5 id="r-cnn-regions-with-cnn-features">R-CNN <em>Regions with CNN features</em></h5>
+<figure>
+<img src="http://image-bed.limit-infinite.top/images/blog/2023-03-22-085923.png" alt="image-20220622175553246" /><figcaption aria-hidden="true">image-20220622175553246</figcaption>
+</figure>
+<p><strong>Selective search </strong></p>
+<p>用来在图片上抽取多个候选框的算法，如图第二步 操作。</p>
+<p><strong>Bounding-box regression</strong></p>
+<p>用来减少定位错误的，在图中第四步中进行回归。</p>
+<p>粗略的过程：</p>
+<p>候选框 <span class="math inline">\(P\)</span>，有四个值 <span class="math inline">\(x,y,w,h\)</span>，目标框<span class="math inline">\(G\)</span>，同样也有这些值；</p>
+<p><span class="math inline">\(\widehat{G}\)</span> = <span class="math inline">\(W*P\)</span> ,学习参数<span class="math inline">\(W\)</span>，让<span class="math inline">\(\widehat{G}\)</span> 近似<span class="math inline">\(G\)</span></p>
+<h5 id="fast-r-cnn">Fast R-CNN</h5>
+<figure>
+<img src="http://image-bed.limit-infinite.top/images/blog/2023-03-22-085931.png" alt="image-20220623103048357" /><figcaption aria-hidden="true">image-20220623103048357</figcaption>
+</figure>
+<p><strong>训练过程</strong></p>
+<ol type="1">
+<li>把图片和 候选框（region proposals） 送进CNN</li>
+<li>CNN处理得出特征图（feature map）</li>
+<li>将每个候选框的位置映射到特征图上，获得候选框对应的特征图，对这个特征图进行分类和定位</li>
+</ol>
+<p><strong>RoI pooling layer</strong></p>
+<p>RoI: region of interest</p>
+<p>由于候选框大小不一，所以对应的特征图大小不一，用这个pooling layer来统一下尺寸。</p>
+<p><strong>Multi-task loss</strong></p>
+<p><span class="math inline">\(L(p, u, tu, v) = Lcls(p, u) + λ[u ≥ 1]Lloc(tu, v)\)</span></p>
+<p>分类loss + 定位loss</p>
+<p><strong>Does multi-task training help?</strong></p>
+<p><img src="http://image-bed.limit-infinite.top/images/blog/2023-03-22-085939.png" alt="image-20220623172948495" style="zoom: 200%;" /></p>
+<p>第一列的数据是模型没有bounding box regressors，第二列数据是模型是在train的时候有，在test的时候没有。</p>
+<p>结论：多任务训练对结果有益</p>
+<h5 id="faster-r-cnn没有fastest-r-cnn了">Faster R-CNN（没有Fastest R-CNN了）</h5>
+<figure>
+<img src="http://image-bed.limit-infinite.top/images/blog/2023-03-22-085946.png" alt="image-20220624172545335" /><figcaption aria-hidden="true">image-20220624172545335</figcaption>
+</figure>
+<p><strong>Region Proposal Networks</strong></p>
+<p>主要提出了选择候选框的网络，叫region proposal networks （RPN）</p>
+<h5 id="mask-r-cnn">Mask R-CNN</h5>
+<figure>
+<img src="http://image-bed.limit-infinite.top/images/blog/2023-03-22-085954.png" alt="image-20220624174539472" /><figcaption aria-hidden="true">image-20220624174539472</figcaption>
+</figure>
+<p>在Faster R-CNN上继续扩展，可以同时做三件事：</p>
+<ol type="1">
+<li>分类</li>
+<li>给出bounding box</li>
+<li>实例分割（在像素上区分不同的物体）</li>
+</ol>
+<p>相比Faster R-CNN，多了一个分支用来实例分割，并且提出了一个RoIAlign来代替RoI pooling。</p>
+<h4 id="yolo-系列">Yolo 系列</h4>
+<h5 id="yolo-v1-开山之作12">Yolo v1 开山之作<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></h5>
+<p><img src="http://image-bed.limit-infinite.top/images/blog/2023-03-22-090002.png" alt="image-20220703161818081"  /></p>
+<p>一个end-to-end的卷积网络，直接得出bounding box和每个框的物体的分类</p>
+<p>具体做的事：</p>
+<p>输入图像分成<span class="math inline">\(S*S\)</span> 个格子，每个格子预测<span class="math inline">\(B\)</span>个框，每个框有5个值：x,y,w,h,confidence；共有<span class="math inline">\(C\)</span>个类别，所以每个格子会预测<span class="math inline">\(C\)</span>个概率值对应每个类别。</p>
+<p>输出为上图的最后一个全连接层，为<span class="math inline">\(7*7*30\)</span>,分解下就是：<span class="math inline">\(7*7*(20+2*5)\)</span> ,7对应<span class="math inline">\(S\)</span>，20对应<span class="math inline">\(C\)</span>类别数，2对应<span class="math inline">\(B\)</span>; 这样就得出一张图所有格子的输出值；</p>
+<figure>
+<img src="images/目标检测介绍/image-20220703163719371.png" alt="image-20220703163719371" /><figcaption aria-hidden="true">image-20220703163719371</figcaption>
+</figure>
+<p>这样就是把<strong>分类问题</strong>变为了<strong>回归问题</strong><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>。</p>
+<p><strong>坐标Loss</strong>:</p>
+<figure>
+<img src="images/目标检测介绍/image-20220703165841656.png" alt="image-20220703165841656" /><figcaption aria-hidden="true">image-20220703165841656</figcaption>
+</figure>
+<p>这里直接使用的是x,y,w,h计算，不同于r-cnn系列。</p>
+<h4 id="ssd不是固态硬盘">SSD（不是固态硬盘）</h4>
+<h4 id="detr">DETR</h4>
+<h4 id="deformable-detr">Deformable DETR</h4>
+<h4 id="其他">其他</h4>
+<h5 id="fpn-feature-pyramid-networks-特征金字塔网络">FPN: Feature Pyramid Networks 特征金字塔网络</h5>
+<p>FPN主要解决的是物体检测中的多尺度问题，通过简单的网络连接改变，在基本不增加原有模型计算量情况下，大幅度提升了小物体检测的性能。</p>
+<figure>
+<img src="http://image-bed.limit-infinite.top/images/blog/2023-03-22-090015.png" alt="image-20220626165446263" /><figcaption aria-hidden="true">image-20220626165446263</figcaption>
+</figure>
+<p>图d就是网络架构</p>
+<p>先从底到上，用CNN提取特征图，然后再从上到下，融合左侧到特征图和上一层上采样的结果作为新的特征图。</p>
+<p>先验的结论：</p>
+<ul>
+<li>深层网络输出的图像分辨率低，学的更多是语义特征</li>
+<li>浅层网络输出的图像分辨率高，学的更多是细节特征</li>
+</ul>
+<h3 id="常用的开源库">常用的开源库</h3>
+<p><a target="_blank" rel="noopener" href="https://github.com/facebookresearch/detectron2">detectron2</a></p>
+<h3 id="参考">参考</h3>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/34142321">知乎 目标检测入门</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1GB4y1X72R?spm_id_from=333.999.0.0&amp;vd_source=6362b5bc63562486a7393f1c1ee476a1">b站 DETR 论文精读</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Db4y1C71g?spm_id_from=333.999.0.0&amp;vd_source=6362b5bc63562486a7393f1c1ee476a1">b站 目标检测算法</a></p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1311.2524">R-CNN paper</a></p>
+<p><a href="">Fast R-CNN paper</a></p>
+<p><a href="">Faster R-CNN paper</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/31426458">Faster R-CNN 解读</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.telesens.co/2018/03/11/object-detection-and-classification-using-r-cnns/#ITEM-1455-4">Faster R-CNN超详细解读</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/426817662">多尺度目标检测简介--FPN</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/xijuezhu8128/article/details/118693939">Deformable DETR 解读</a></p>
+<section class="footnotes" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1" role="doc-endnote"><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/25236464">Yolo v1 解读</a><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/21329754">分类问题 VS 回归问题</a><a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>秃头的小刺猬
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://narutojian.github.io/2022/06/21/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E4%BB%8B%E7%BB%8D/" title="目标检测介绍">http://narutojian.github.io/2022/06/21/目标检测介绍/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/" rel="tag"><i class="fa fa-tag"></i> 目标检测</a>
+              <a href="/tags/%E7%BB%84%E4%BC%9A/" rel="tag"><i class="fa fa-tag"></i> 组会</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/06/09/TADA%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" rel="prev" title="TADA论文阅读">
+                  <i class="fa fa-chevron-left"></i> TADA论文阅读
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/06/29/bounding-box-regression%E7%AE%80%E4%BB%8B/" rel="next" title="bounding box regression简介">
+                  bounding box regression简介 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2020 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class=""></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">秃头的小刺猬</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">105k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">11:41</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

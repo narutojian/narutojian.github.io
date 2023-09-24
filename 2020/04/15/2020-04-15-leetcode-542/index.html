@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.2">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="manifest" href="/images/site.webmanifest">
+  <meta name="google-site-verification" content="<meta name="google-site-verification" content="flKSt7LiyY7jUhlnv-ICYGB3DW183M7aZEM_MJ0LyAM" />">
+  <meta name="msvalidate.01" content="<meta name="msvalidate.01" content="551E330FEDD04710DC9B83BE6974A021" />">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css" integrity="sha256-jTIdiMuX/e3DGJUGwl3pKSxuc6YOuqtJYkM0bGQESA4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"narutojian.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.10.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="力扣题库542题——01矩阵的解题记录">
+<meta property="og:type" content="article">
+<meta property="og:title" content="leetcode-542">
+<meta property="og:url" content="http://narutojian.github.io/2020/04/15/2020-04-15-leetcode-542/index.html">
+<meta property="og:site_name" content="岁月的童话">
+<meta property="og:description" content="力扣题库542题——01矩阵的解题记录">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://narutojian.github.io/images/2020-04-15-leetcode-542/图1.png">
+<meta property="og:image" content="http://narutojian.github.io/images/2020-04-15-leetcode-542/图2.png">
+<meta property="og:image" content="http://narutojian.github.io/images/2020-04-15-leetcode-542/图3.png">
+<meta property="article:published_time" content="2020-04-15T13:11:31.000Z">
+<meta property="article:modified_time" content="2023-09-24T18:38:22.982Z">
+<meta property="article:author" content="秃头的小刺猬">
+<meta property="article:tag" content="动态规划">
+<meta property="article:tag" content="BFS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://narutojian.github.io/images/2020-04-15-leetcode-542/图1.png">
+
+
+<link rel="canonical" href="http://narutojian.github.io/2020/04/15/2020-04-15-leetcode-542/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://narutojian.github.io/2020/04/15/2020-04-15-leetcode-542/","path":"2020/04/15/2020-04-15-leetcode-542/","title":"leetcode-542"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>leetcode-542 | 岁月的童话</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">岁月的童话</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">程序猿，学习，生活</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-commonweal"><a href="/404/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>公益 404</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE%E9%93%BE%E6%8E%A5"><span class="nav-number">1.</span> <span class="nav-text">题目链接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E6%B3%A2%E4%B8%89%E6%8A%98%E7%9A%84%E8%A7%A3%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text">一波三折的解题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E6%80%9D%E8%B7%AF"><span class="nav-number">2.1.</span> <span class="nav-text">初始思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%80%E7%BB%88%E7%9A%84%E6%80%9D%E8%B7%AF"><span class="nav-number">2.2.</span> <span class="nav-text">最终的思路</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="秃头的小刺猬"
+      src="/images/avatar/avatar.jpg">
+  <p class="site-author-name" itemprop="name">秃头的小刺猬</p>
+  <div class="site-description" itemprop="description">让岁月留下痕迹</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">58</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">37</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">61</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/narutojian" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;narutojian" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.jsdelivr.net/npm/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://narutojian.github.io/2020/04/15/2020-04-15-leetcode-542/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar/avatar.jpg">
+      <meta itemprop="name" content="秃头的小刺猬">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="岁月的童话">
+      <meta itemprop="description" content="让岁月留下痕迹">
+    </span>
+    
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="leetcode-542 | 岁月的童话">
+      <meta itemprop="description" content="力扣题库542题——01矩阵的解题记录">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          leetcode-542
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-04-15 21:11:31" itemprop="dateCreated datePublished" datetime="2020-04-15T21:11:31+08:00">2020-04-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-09-25 02:38:22" itemprop="dateModified" datetime="2023-09-25T02:38:22+08:00">2023-09-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%AE%97%E6%B3%95/Leetcode/" itemprop="url" rel="index"><span itemprop="name">Leetcode</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>4.3k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>29 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">力扣题库542题——01矩阵的解题记录</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="题目链接">题目链接</h2>
+<p>https://leetcode-cn.com/problems/01-matrix/</p>
+<h2 id="一波三折的解题">一波三折的解题</h2>
+<p>初看题目，这好像可以单源最短路径来解决。</p>
+<h3 id="初始思路">初始思路</h3>
+<p>虽然一开始感觉可以用单源最短路径解决，但转念一想，好像并不需要这么麻烦，直接BFS解决也是可以的，就是找所有1到最近的0的距离么，BFS刚刚好。</p>
+<p>设任意点的值为v，这个题目下的值只有0或1；任意点的距离值即答案为d；</p>
+<p>然后整理下流程：</p>
+<ol type="1">
+<li>先找到01矩阵中v为1的点，将该点放入队列中。</li>
+<li>然后从队列中拿出一个节点，用BFS的方式找出最近的一个v为0的点，并记录下距离d。</li>
+<li>最后返回结果。</li>
+</ol>
+<p>思路确实简单，而且也没啥毛病。但是我在BFS的时候用的是优先队列。事后我在想的时候，发现自己真是脑抽。但当时我是这样想的，对于当前的点，每一次把周围的四个点放到队列中，应该将距离值最小的点放到前面去，即优先弹出d小的点。其实，这是多此一举。因为先进入队列的都是d小的，后进入的肯定比前面进入的d至少多1。</p>
+<p>此处还是贴上我心酸的代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 节点类</span></span><br><span class="line"><span class="comment"> * 保存在矩阵中的索引号和距离值</span></span><br><span class="line"><span class="comment"> * 实现比较器——优先队列需要</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span> <span class="keyword">implements</span> <span class="title">Comparable</span>&lt;<span class="title">Node</span>&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> x;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> y;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> val;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Node</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.x = x;</span><br><span class="line">        <span class="keyword">this</span>.y = y;</span><br><span class="line">        val = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getX</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> x;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setX</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.x = x;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getY</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> y;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setY</span><span class="params">(<span class="keyword">int</span> y)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.y = y;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getVal</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> val;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setVal</span><span class="params">(<span class="keyword">int</span> val)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.val = val;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compareTo</span><span class="params">(Node o)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.val - o.getVal();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 主类</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[][] updateMatrix(<span class="keyword">int</span>[][] matrix) &#123;</span><br><span class="line">        <span class="keyword">int</span> row = matrix.length;</span><br><span class="line">        <span class="keyword">int</span> column = matrix[<span class="number">0</span>].length;</span><br><span class="line">        <span class="keyword">int</span>[][] ans = <span class="keyword">new</span> <span class="keyword">int</span>[row][column];</span><br><span class="line">        Queue&lt;Node&gt; queue = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">		</span><br><span class="line">        <span class="comment">// 将1压入队列</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; row; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; column; j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (matrix[i][j] == <span class="number">1</span>) queue.add(<span class="keyword">new</span> Node(i,j));    </span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (!queue.isEmpty()) &#123;</span><br><span class="line">            bfs(queue.remove(),ans,matrix,row,column);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">bfs</span><span class="params">(Node start, <span class="keyword">int</span>[][] ans,<span class="keyword">int</span>[][] matrix, <span class="keyword">int</span> row,<span class="keyword">int</span> column)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">boolean</span>[][] visit = <span class="keyword">new</span> <span class="keyword">boolean</span>[row][column];</span><br><span class="line">        PriorityQueue&lt;Node&gt; queue = <span class="keyword">new</span> PriorityQueue&lt;&gt;();</span><br><span class="line">        visit[start.getX()][start.getY()] = <span class="keyword">true</span>;</span><br><span class="line">        queue.add(start);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span>[][] directions = &#123;&#123;<span class="number">0</span>,-<span class="number">1</span>&#125;,&#123;-<span class="number">1</span>,<span class="number">0</span>&#125;,&#123;<span class="number">0</span>,<span class="number">1</span>&#125;,&#123;<span class="number">1</span>,<span class="number">0</span>&#125;&#125;;</span><br><span class="line">        <span class="keyword">int</span> nextX,nextY;</span><br><span class="line">        <span class="keyword">while</span> (!queue.isEmpty()) &#123;</span><br><span class="line">            Node cur = queue.remove();</span><br><span class="line">            <span class="keyword">if</span> (matrix[cur.getX()][cur.getY()] == <span class="number">0</span>) &#123;</span><br><span class="line">                ans[start.getX()][start.getY()] = cur.getVal();</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">4</span>; i++) &#123;</span><br><span class="line">                nextX = cur.getX()+directions[i][<span class="number">0</span>];</span><br><span class="line">                nextY = cur.getY()+directions[i][<span class="number">1</span>];</span><br><span class="line">                <span class="keyword">if</span> (nextX &gt;= <span class="number">0</span> &amp;&amp; nextX &lt; row &amp;&amp; nextY &gt;= <span class="number">0</span> &amp;&amp; nextY &lt; column &amp;&amp; !visit[nextX][nextY]) &#123;</span><br><span class="line">                    visit[nextX][nextY] = <span class="keyword">true</span>;</span><br><span class="line">                    Node nextNode = <span class="keyword">new</span> Node(nextX,nextY);</span><br><span class="line">                    nextNode.setVal(cur.getVal()+<span class="number">1</span>);</span><br><span class="line">                    queue.add(nextNode);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>结果：提交后超时。我想原因应该是优先队列的多此一举和重复遍历。</p>
+<blockquote>
+<p>其中重复遍历是这个意思：</p>
+<p>对于已知道距离d2的点m，如果当时的点为n，距离值为d1，BFS后遇到了m，将m放进队列时给这个点的距离值设置为d1+1。但m点是已知距离值的，即d1+d2这个距离就可以遇到一个v=0的点，这个d1+d2是可以利用的，这个值可能就是答案，也可能不是。</p>
+<p>举个例子：</p>
+<p>如这样的01矩阵： <img src="/images/2020-04-15-leetcode-542/图1.png" alt="图1" /></p>
+<p>当程序进行到这里的时候：<img src="/images/2020-04-15-leetcode-542/图2.png" alt="图2" /></p>
+<p>此时，队列弹出的点是图2中的灰色框，那么按照BFS遍历，这个点的下一层为下图所示：</p>
+<figure>
+<img src="/images/2020-04-15-leetcode-542/图3.png" alt="图3" /><figcaption aria-hidden="true">图3</figcaption>
+</figure>
+<p>可以发现，进入队列中的有三个点，但是其中2个点都是有值，按照一般流程会在进行下一层的遍历，这样其实会浪费一些时间，而我们可以利用两个已知值的点省略掉一些遍历。</p>
+<p>对于已知距离值d的点，我们在进行BFS遍历到该点时就可以不需要在遍历该店的周围的点，如果遍历了，那就是重复遍历。</p>
+</blockquote>
+<h3 id="最终的思路">最终的思路</h3>
+<p>经过一番脑细胞死亡的过程，我想到最终AC的思路。</p>
+<p>简而言之，就是用<strong>已知距离值的点推出未知距离值的点</strong>.</p>
+<p>流程如下：</p>
+<ol type="1">
+<li>队列首先压入v=0且d=0的点，这些点就是初始时v=0的点。我们可以将这些点称为第一层的点。</li>
+<li>之后，弹出上一层的每一个点，并对每个点进行BFS遍历，如果遍历到v=1的点且<strong>之前没有遍历过</strong>，计算距离值d，压入队列，这些点记为第二层的店。可以确定的是，对于每个遍历到的v=1的点x，其d的值都是最优的值（这个用反证法就很容易证明出来）。第二层的点的d都为1.</li>
+<li>之后，重复2步骤，直到队列中没有节点。返回结果。</li>
+</ol>
+<p>贴上代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[][] updateMatrix(<span class="keyword">int</span>[][] matrix) &#123;</span><br><span class="line">        <span class="keyword">int</span> row = matrix.length;</span><br><span class="line">        <span class="keyword">int</span> column = matrix[<span class="number">0</span>].length;</span><br><span class="line">        <span class="keyword">int</span>[][] ans = <span class="keyword">new</span> <span class="keyword">int</span>[row][column];</span><br><span class="line">        <span class="keyword">boolean</span>[][] visit = <span class="keyword">new</span> <span class="keyword">boolean</span>[row][column];</span><br><span class="line">        Queue&lt;Node&gt; queue = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; row; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; column; j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (matrix[i][j] == <span class="number">0</span>) &#123;</span><br><span class="line">                    queue.add(<span class="keyword">new</span> Node(i,j));</span><br><span class="line">                    visit[i][j] = <span class="keyword">true</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span>[][] directions = &#123;&#123;<span class="number">0</span>,-<span class="number">1</span>&#125;,&#123;-<span class="number">1</span>,<span class="number">0</span>&#125;,&#123;<span class="number">0</span>,<span class="number">1</span>&#125;,&#123;<span class="number">1</span>,<span class="number">0</span>&#125;&#125;;</span><br><span class="line">        <span class="keyword">int</span> nextX,nextY;</span><br><span class="line">        <span class="keyword">while</span> (!queue.isEmpty()) &#123;</span><br><span class="line">            Node cur = queue.remove();</span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">4</span>; i++) &#123;</span><br><span class="line">                nextX = cur.getX()+directions[i][<span class="number">0</span>];</span><br><span class="line">                nextY = cur.getY()+directions[i][<span class="number">1</span>];</span><br><span class="line">                <span class="keyword">if</span> (nextX &gt;= <span class="number">0</span> &amp;&amp; nextX &lt; row &amp;&amp; nextY &gt;= <span class="number">0</span> &amp;&amp; nextY &lt; column &amp;&amp; !visit[nextX][nextY]) &#123;</span><br><span class="line">                    visit[nextX][nextY] = <span class="keyword">true</span>;</span><br><span class="line">                    Node nextNode = <span class="keyword">new</span> Node(nextX,nextY);</span><br><span class="line">                    ans[nextX][nextY] = cur.getVal()+<span class="number">1</span>;</span><br><span class="line">                    queue.add(nextNode);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> x;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> y;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Node</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.x = x;</span><br><span class="line">        <span class="keyword">this</span>.y = y;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getX</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> x;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setX</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.x = x;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getY</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> y;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setY</span><span class="params">(<span class="keyword">int</span> y)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.y = y;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>秃头的小刺猬
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://narutojian.github.io/2020/04/15/2020-04-15-leetcode-542/" title="leetcode-542">http://narutojian.github.io/2020/04/15/2020-04-15-leetcode-542/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" rel="tag"><i class="fa fa-tag"></i> 动态规划</a>
+              <a href="/tags/BFS/" rel="tag"><i class="fa fa-tag"></i> BFS</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/03/05/2020-03-05-%E6%98%93%E4%BF%9D%E5%AE%9E%E4%B9%A0%E6%80%BB%E7%BB%93/" rel="prev" title="易保实习总结">
+                  <i class="fa fa-chevron-left"></i> 易保实习总结
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/04/16/2020-04-16-%E7%AE%97%E6%B3%95%E4%B9%8B%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84%E9%97%AE%E9%A2%98/" rel="next" title="经典最短路径算法学习笔记">
+                  经典最短路径算法学习笔记 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2020 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class=""></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">秃头的小刺猬</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">105k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">11:41</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>
